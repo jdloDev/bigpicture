@@ -1,0 +1,6 @@
+# In this example, any change in this repo
+# wil requiere approval from @vriesmarcel
+* @vriesmarcel
+
+# Any change inside the `/Documents` directory
+# will requiere approval form anyone in the organizational team docstream/Documents @fluentebyes/docsteam
