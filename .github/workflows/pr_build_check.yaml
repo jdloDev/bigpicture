@@ -5,15 +5,25 @@ on:
     branches: [ main ]
     paths:
       - 'TailwindTraders.Website/**'
-
 jobs:
-  build:
+  CI:
     runs-on: ubuntu-latest
     steps:
-    - name: 'Checkout Github Action'
-      uses: actions/checkout@master
 
-    - name: Docker build
+    - uses: actions/checkout@master
+
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.16.3    
+
+    - name: Install dependencies in client app
+      working-directory: TailwindTraders.Website/Source/Tailwind.Traders.Web/ClientApp
+      run: npm install
+
+    - name: Build and publish with dotnet
       working-directory: TailwindTraders.Website/Source/Tailwind.Traders.Web
       run: |
-        docker build . --build-arg sdkTag=5.0 --build-arg runtimeTag=5.0 -t tailwindtraders/web:gh-${{ github.sha }} -t latest
+        dotnet build --configuration Release
+        dotnet test --configuration Release
+        dotnet publish -c Release -o publish
